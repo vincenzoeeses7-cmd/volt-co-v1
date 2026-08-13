@@ -115,6 +115,13 @@ export default function PuissancePage() {
           <p className="mt-3 text-volt-white/70">
             Calcule la puissance, la tension ou l&apos;intensité.
           </p>
+
+          <Link
+  href="/formules/electricite/puissance"
+  className="mt-4 inline-flex items-center text-sm font-medium text-volt-blue transition hover:text-volt-white"
+>
+  📖 Voir la formule →
+</Link>
         </div>
 
         <section className="mt-10 rounded-2xl border border-volt-blue/20 bg-volt-blue-dark p-6 sm:p-8">

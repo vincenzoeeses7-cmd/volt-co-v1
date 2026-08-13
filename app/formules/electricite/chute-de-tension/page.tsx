@@ -19,6 +19,13 @@ export default function ChuteDeTensionFormulePage() {
           <p className="mt-3 text-volt-white/70">
             La relation entre chute de tension, résistance et intensité.
           </p>
+
+          <Link
+            href="/calculer/chute-de-tension"
+            className="mt-4 inline-flex items-center text-sm font-medium text-volt-blue transition hover:text-volt-white"
+          >
+            🧮 Calculer avec cette formule →
+          </Link>
         </div>
 
         <section className="mt-10 rounded-2xl border border-volt-orange/30 bg-volt-blue-dark p-8 text-center">

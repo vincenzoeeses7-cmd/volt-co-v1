@@ -102,7 +102,7 @@ export default function EnergiePage() {
                   setUnit(event.target.value);
                   setResult(null);
                 }}
-                className="border-l border-volt-blue/20 bg-background px-3 py-3 text-sm text-volt-white outline-none"
+                className="appearance-none border-l border-volt-blue/20 bg-background px-3 py-3 text-sm text-volt-white outline-none"
               >
                 <option value="Wh">Wh</option>
                 <option value="kWh">kWh</option>
@@ -120,7 +120,7 @@ export default function EnergiePage() {
                 setTargetUnit(event.target.value);
                 setResult(null);
               }}
-              className="w-full rounded-xl border border-volt-blue/20 bg-background px-4 py-3 text-center text-sm text-volt-white outline-none transition focus:border-volt-blue/60 sm:w-auto"
+              className="appearance-nonew-full rounded-xl border border-volt-blue/20 bg-background px-4 py-3 text-center text-sm text-volt-white outline-none transition focus:border-volt-blue/60 sm:w-auto"
             >
               <option value="Wh">Wh</option>
               <option value="kWh">kWh</option>

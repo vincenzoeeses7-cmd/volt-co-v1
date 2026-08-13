@@ -61,6 +61,13 @@ export default function ChuteDeTensionPage() {
           <p className="mt-3 text-volt-white/70">
             Calcule la chute de tension dans un conducteur.
           </p>
+
+          <Link
+  href="/formules/electricite/chute-de-tension"
+  className="mt-4 inline-flex items-center text-sm font-medium text-volt-blue transition hover:text-volt-white"
+>
+  📖 Voir la formule →
+</Link>
         </div>
 
         <section className="mt-10 rounded-2xl border border-volt-blue/20 bg-volt-blue-dark p-6 sm:p-8">
