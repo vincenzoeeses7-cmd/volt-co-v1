@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -10,36 +9,15 @@ export default function IntensitePage() {
   const [targetUnit, setTargetUnit] = useState("mA");
   const [result, setResult] = useState<number | null>(null);
 
+  const factors: Record<string, number> = {
+    "µA": 0.000001,
+    mA: 0.001,
+    A: 1,
+    kA: 1_000,
+  };
+
   function convertCurrent(value: number, from: string, to: string) {
-    if (from === to) {
-      return value;
-    }
-
-    if (from === "A" && to === "mA") {
-      return value * 1000;
-    }
-
-    if (from === "A" && to === "kA") {
-      return value / 1000;
-    }
-
-    if (from === "mA" && to === "A") {
-      return value / 1000;
-    }
-
-    if (from === "mA" && to === "kA") {
-      return value / 1_000_000;
-    }
-
-    if (from === "kA" && to === "A") {
-      return value * 1000;
-    }
-
-    if (from === "kA" && to === "mA") {
-      return value * 1_000_000;
-    }
-
-    return value;
+    return (value * factors[from]) / factors[to];
   }
 
   function handleConvert() {
@@ -102,10 +80,11 @@ export default function IntensitePage() {
                   setUnit(event.target.value);
                   setResult(null);
                 }}
-                className="border-l border-volt-blue/20 bg-background px-3 py-3 text-sm text-volt-white outline-none"
+                className="appearance-none border-l border-volt-blue/20 bg-background px-3 py-3 text-sm text-volt-white outline-none"
               >
-                <option value="A">A</option>
+                <option value="µA">µA</option>
                 <option value="mA">mA</option>
+                <option value="A">A</option>
                 <option value="kA">kA</option>
               </select>
             </div>
@@ -120,10 +99,11 @@ export default function IntensitePage() {
                 setTargetUnit(event.target.value);
                 setResult(null);
               }}
-              className="w-full rounded-xl border border-volt-blue/20 bg-background px-4 py-3 text-center text-sm text-volt-white outline-none transition focus:border-volt-blue/60 sm:w-auto"
+              className="w-full appearance-none rounded-xl border border-volt-blue/20 bg-background px-4 py-3 text-center text-sm text-volt-white outline-none transition focus:border-volt-blue/60 sm:w-auto"
             >
-              <option value="A">A</option>
+              <option value="µA">µA</option>
               <option value="mA">mA</option>
+              <option value="A">A</option>
               <option value="kA">kA</option>
             </select>
           </div>

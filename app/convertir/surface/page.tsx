@@ -3,22 +3,36 @@
 import Link from "next/link";
 import { useState } from "react";
 
-export default function TensionPage() {
+const units = {
+  "mm²": 0,
+  "cm²": 1,
+  "dm²": 2,
+  "m²": 3,
+  "dam²": 4,
+  "hm²": 5,
+  "km²": 6,
+} as const;
+
+type Unit = keyof typeof units;
+
+export default function SurfacePage() {
   const [value, setValue] = useState("");
-  const [unit, setUnit] = useState("V");
-  const [targetUnit, setTargetUnit] = useState("mV");
+  const [unit, setUnit] = useState<Unit>("m²");
+  const [targetUnit, setTargetUnit] = useState<Unit>("cm²");
   const [result, setResult] = useState<number | null>(null);
 
-  const factors: Record<string, number> = {
-    "µV": 0.000001,
-    mV: 0.001,
-    V: 1,
-    kV: 1_000,
-    MV: 1_000_000,
-  };
+  function convertSurface(
+    value: number,
+    from: Unit,
+    to: Unit
+  ) {
+    if (from === to) {
+      return value;
+    }
 
-  function convertVoltage(value: number, from: string, to: string) {
-    return (value * factors[from]) / factors[to];
+    const difference = units[from] - units[to];
+
+    return value * Math.pow(10, difference * 2);
   }
 
   function handleConvert() {
@@ -27,8 +41,15 @@ export default function TensionPage() {
       return;
     }
 
-    const converted = convertVoltage(
-      Number(value),
+    const numericValue = Number(value);
+
+    if (Number.isNaN(numericValue)) {
+      setResult(null);
+      return;
+    }
+
+    const converted = convertSurface(
+      numericValue,
       unit,
       targetUnit
     );
@@ -48,11 +69,11 @@ export default function TensionPage() {
 
         <div className="mt-8">
           <h1 className="text-4xl font-bold text-volt-white">
-            ⚡ Tension
+            📐 Surface
           </h1>
 
           <p className="mt-3 text-volt-white/70">
-            Convertis rapidement une tension électrique.
+            Convertis rapidement une surface.
           </p>
         </div>
 
@@ -78,16 +99,16 @@ export default function TensionPage() {
               <select
                 value={unit}
                 onChange={(event) => {
-                  setUnit(event.target.value);
+                  setUnit(event.target.value as Unit);
                   setResult(null);
                 }}
                 className="appearance-none border-l border-volt-blue/20 bg-background px-3 py-3 text-sm text-volt-white outline-none"
               >
-                <option value="µV">µV</option>
-                <option value="mV">mV</option>
-                <option value="V">V</option>
-                <option value="kV">kV</option>
-                <option value="MV">MV</option>
+                {Object.keys(units).map((unitOption) => (
+                  <option key={unitOption} value={unitOption}>
+                    {unitOption}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -98,16 +119,16 @@ export default function TensionPage() {
             <select
               value={targetUnit}
               onChange={(event) => {
-                setTargetUnit(event.target.value);
+                setTargetUnit(event.target.value as Unit);
                 setResult(null);
               }}
               className="w-full appearance-none rounded-xl border border-volt-blue/20 bg-background px-4 py-3 text-center text-sm text-volt-white outline-none transition focus:border-volt-blue/60 sm:w-auto"
             >
-              <option value="µV">µV</option>
-              <option value="mV">mV</option>
-              <option value="V">V</option>
-              <option value="kV">kV</option>
-              <option value="MV">MV</option>
+              {Object.keys(units).map((unitOption) => (
+                <option key={unitOption} value={unitOption}>
+                  {unitOption}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -126,7 +147,7 @@ export default function TensionPage() {
               </p>
 
               <p className="mt-2 text-2xl font-bold text-volt-blue">
-                {result} {targetUnit}
+                {result.toLocaleString("fr-FR")} {targetUnit}
               </p>
             </div>
           )}

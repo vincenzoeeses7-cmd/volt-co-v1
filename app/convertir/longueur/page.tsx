@@ -1,45 +1,34 @@
-
 "use client";
 
 import Link from "next/link";
 import { useState } from "react";
 
+const units = {
+  mm: 0,
+  cm: 1,
+  dm: 2,
+  m: 3,
+  dam: 4,
+  hm: 5,
+  km: 6,
+} as const;
+
+type Unit = keyof typeof units;
+
 export default function LongueurPage() {
   const [value, setValue] = useState("");
-  const [unit, setUnit] = useState("m");
-  const [targetUnit, setTargetUnit] = useState("cm");
+  const [unit, setUnit] = useState<Unit>("m");
+  const [targetUnit, setTargetUnit] = useState<Unit>("cm");
   const [result, setResult] = useState<number | null>(null);
 
-  function convertLength(value: number, from: string, to: string) {
+  function convertLength(value: number, from: Unit, to: Unit) {
     if (from === to) {
       return value;
     }
 
-    if (from === "m" && to === "cm") {
-      return value * 100;
-    }
+    const difference = units[from] - units[to];
 
-    if (from === "m" && to === "mm") {
-      return value * 1000;
-    }
-
-    if (from === "cm" && to === "m") {
-      return value / 100;
-    }
-
-    if (from === "cm" && to === "mm") {
-      return value * 10;
-    }
-
-    if (from === "mm" && to === "m") {
-      return value / 1000;
-    }
-
-    if (from === "mm" && to === "cm") {
-      return value / 10;
-    }
-
-    return value;
+    return value * Math.pow(10, difference);
   }
 
   function handleConvert() {
@@ -48,8 +37,15 @@ export default function LongueurPage() {
       return;
     }
 
+    const numericValue = Number(value);
+
+    if (Number.isNaN(numericValue)) {
+      setResult(null);
+      return;
+    }
+
     const converted = convertLength(
-      Number(value),
+      numericValue,
       unit,
       targetUnit
     );
@@ -99,14 +95,16 @@ export default function LongueurPage() {
               <select
                 value={unit}
                 onChange={(event) => {
-                  setUnit(event.target.value);
+                  setUnit(event.target.value as Unit);
                   setResult(null);
                 }}
-                className="border-l border-volt-blue/20 bg-background px-3 py-3 text-sm text-volt-white outline-none"
+                className="appearance-none border-l border-volt-blue/20 bg-background px-3 py-3 text-sm text-volt-white outline-none"
               >
-                <option value="m">m</option>
-                <option value="cm">cm</option>
-                <option value="mm">mm</option>
+                {Object.keys(units).map((unitOption) => (
+                  <option key={unitOption} value={unitOption}>
+                    {unitOption}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -117,14 +115,16 @@ export default function LongueurPage() {
             <select
               value={targetUnit}
               onChange={(event) => {
-                setTargetUnit(event.target.value);
+                setTargetUnit(event.target.value as Unit);
                 setResult(null);
               }}
-              className="w-full rounded-xl border border-volt-blue/20 bg-background px-4 py-3 text-center text-sm text-volt-white outline-none transition focus:border-volt-blue/60 sm:w-auto"
+              className="w-full appearance-none rounded-xl border border-volt-blue/20 bg-background px-4 py-3 text-center text-sm text-volt-white outline-none transition focus:border-volt-blue/60 sm:w-auto"
             >
-              <option value="m">m</option>
-              <option value="cm">cm</option>
-              <option value="mm">mm</option>
+              {Object.keys(units).map((unitOption) => (
+                <option key={unitOption} value={unitOption}>
+                  {unitOption}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -143,7 +143,7 @@ export default function LongueurPage() {
               </p>
 
               <p className="mt-2 text-2xl font-bold text-volt-blue">
-                {result} {targetUnit}
+                {result.toLocaleString("fr-FR")} {targetUnit}
               </p>
             </div>
           )}

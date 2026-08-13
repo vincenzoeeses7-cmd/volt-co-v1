@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -10,36 +9,15 @@ export default function EnergiePage() {
   const [targetUnit, setTargetUnit] = useState("kWh");
   const [result, setResult] = useState<number | null>(null);
 
-  function convertEnergie(value: number, from: string, to: string) {
-    if (from === to) {
-      return value;
-    }
+  const factors: Record<string, number> = {
+    Wh: 1,
+    kWh: 1_000,
+    MWh: 1_000_000,
+    GWh: 1_000_000_000,
+  };
 
-    if (from === "Wh" && to === "kWh") {
-      return value / 1000;
-    }
-
-    if (from === "Wh" && to === "MWh") {
-      return value / 1_000_000;
-    }
-
-    if (from === "kWh" && to === "Wh") {
-      return value * 1000;
-    }
-
-    if (from === "kWh" && to === "MWh") {
-      return value / 1000;
-    }
-
-    if (from === "MWh" && to === "Wh") {
-      return value * 1_000_000;
-    }
-
-    if (from === "MWh" && to === "kWh") {
-      return value * 1000;
-    }
-
-    return value;
+  function convertEnergy(value: number, from: string, to: string) {
+    return (value * factors[from]) / factors[to];
   }
 
   function handleConvert() {
@@ -48,7 +26,7 @@ export default function EnergiePage() {
       return;
     }
 
-    const converted = convertEnergie(
+    const converted = convertEnergy(
       Number(value),
       unit,
       targetUnit
@@ -73,7 +51,7 @@ export default function EnergiePage() {
           </h1>
 
           <p className="mt-3 text-volt-white/70">
-            Convertis rapidement une énergie.
+            Convertis rapidement une énergie électrique.
           </p>
         </div>
 
@@ -107,6 +85,7 @@ export default function EnergiePage() {
                 <option value="Wh">Wh</option>
                 <option value="kWh">kWh</option>
                 <option value="MWh">MWh</option>
+                <option value="GWh">GWh</option>
               </select>
             </div>
 
@@ -120,11 +99,12 @@ export default function EnergiePage() {
                 setTargetUnit(event.target.value);
                 setResult(null);
               }}
-              className="appearance-nonew-full rounded-xl border border-volt-blue/20 bg-background px-4 py-3 text-center text-sm text-volt-white outline-none transition focus:border-volt-blue/60 sm:w-auto"
+              className="w-full appearance-none rounded-xl border border-volt-blue/20 bg-background px-4 py-3 text-center text-sm text-volt-white outline-none transition focus:border-volt-blue/60 sm:w-auto"
             >
               <option value="Wh">Wh</option>
               <option value="kWh">kWh</option>
               <option value="MWh">MWh</option>
+              <option value="GWh">GWh</option>
             </select>
           </div>
 

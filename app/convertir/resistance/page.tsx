@@ -9,36 +9,15 @@ export default function ResistancePage() {
   const [targetUnit, setTargetUnit] = useState("kΩ");
   const [result, setResult] = useState<number | null>(null);
 
+  const factors: Record<string, number> = {
+    Ω: 1,
+    kΩ: 1_000,
+    MΩ: 1_000_000,
+    GΩ: 1_000_000_000,
+  };
+
   function convertResistance(value: number, from: string, to: string) {
-    if (from === to) {
-      return value;
-    }
-
-    if (from === "Ω" && to === "kΩ") {
-      return value / 1000;
-    }
-
-    if (from === "Ω" && to === "MΩ") {
-      return value / 1_000_000;
-    }
-
-    if (from === "kΩ" && to === "Ω") {
-      return value * 1000;
-    }
-
-    if (from === "kΩ" && to === "MΩ") {
-      return value / 1000;
-    }
-
-    if (from === "MΩ" && to === "Ω") {
-      return value * 1_000_000;
-    }
-
-    if (from === "MΩ" && to === "kΩ") {
-      return value * 1000;
-    }
-
-    return value;
+    return (value * factors[from]) / factors[to];
   }
 
   function handleConvert() {
@@ -72,7 +51,7 @@ export default function ResistancePage() {
           </h1>
 
           <p className="mt-3 text-volt-white/70">
-            Convertis rapidement une résistance.
+            Convertis rapidement une résistance électrique.
           </p>
         </div>
 
@@ -101,11 +80,12 @@ export default function ResistancePage() {
                   setUnit(event.target.value);
                   setResult(null);
                 }}
-                className="border-l border-volt-blue/20 bg-background px-3 py-3 text-sm text-volt-white outline-none"
+                className="appearance-none border-l border-volt-blue/20 bg-background px-3 py-3 text-sm text-volt-white outline-none"
               >
                 <option value="Ω">Ω</option>
                 <option value="kΩ">kΩ</option>
                 <option value="MΩ">MΩ</option>
+                <option value="GΩ">GΩ</option>
               </select>
             </div>
 
@@ -119,11 +99,12 @@ export default function ResistancePage() {
                 setTargetUnit(event.target.value);
                 setResult(null);
               }}
-              className="w-full rounded-xl border border-volt-blue/20 bg-background px-4 py-3 text-center text-sm text-volt-white outline-none transition focus:border-volt-blue/60 sm:w-auto"
+              className="w-full appearance-none rounded-xl border border-volt-blue/20 bg-background px-4 py-3 text-center text-sm text-volt-white outline-none transition focus:border-volt-blue/60 sm:w-auto"
             >
               <option value="Ω">Ω</option>
               <option value="kΩ">kΩ</option>
               <option value="MΩ">MΩ</option>
+              <option value="GΩ">GΩ</option>
             </select>
           </div>
 

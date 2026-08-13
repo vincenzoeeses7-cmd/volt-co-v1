@@ -9,36 +9,16 @@ export default function PuissancePage() {
   const [targetUnit, setTargetUnit] = useState("kW");
   const [result, setResult] = useState<number | null>(null);
 
+  const factors: Record<string, number> = {
+    mW: 0.001,
+    W: 1,
+    kW: 1_000,
+    MW: 1_000_000,
+    GW: 1_000_000_000,
+  };
+
   function convertPower(value: number, from: string, to: string) {
-    if (from === to) {
-      return value;
-    }
-
-    if (from === "W" && to === "kW") {
-      return value / 1000;
-    }
-
-    if (from === "W" && to === "MW") {
-      return value / 1_000_000;
-    }
-
-    if (from === "kW" && to === "W") {
-      return value * 1000;
-    }
-
-    if (from === "kW" && to === "MW") {
-      return value / 1000;
-    }
-
-    if (from === "MW" && to === "W") {
-      return value * 1_000_000;
-    }
-
-    if (from === "MW" && to === "kW") {
-      return value * 1000;
-    }
-
-    return value;
+    return (value * factors[from]) / factors[to];
   }
 
   function handleConvert() {
@@ -72,7 +52,7 @@ export default function PuissancePage() {
           </h1>
 
           <p className="mt-3 text-volt-white/70">
-            Convertis rapidement une puissance.
+            Convertis rapidement une puissance électrique.
           </p>
         </div>
 
@@ -101,11 +81,13 @@ export default function PuissancePage() {
                   setUnit(event.target.value);
                   setResult(null);
                 }}
-                className="border-l border-volt-blue/20 bg-background px-3 py-3 text-sm text-volt-white outline-none"
+                className="appearance-none border-l border-volt-blue/20 bg-background px-3 py-3 text-sm text-volt-white outline-none"
               >
+                <option value="mW">mW</option>
                 <option value="W">W</option>
                 <option value="kW">kW</option>
                 <option value="MW">MW</option>
+                <option value="GW">GW</option>
               </select>
             </div>
 
@@ -119,11 +101,13 @@ export default function PuissancePage() {
                 setTargetUnit(event.target.value);
                 setResult(null);
               }}
-              className="w-full rounded-xl border border-volt-blue/20 bg-background px-4 py-3 text-center text-sm text-volt-white outline-none transition focus:border-volt-blue/60 sm:w-auto"
+              className="w-full appearance-none rounded-xl border border-volt-blue/20 bg-background px-4 py-3 text-center text-sm text-volt-white outline-none transition focus:border-volt-blue/60 sm:w-auto"
             >
+              <option value="mW">mW</option>
               <option value="W">W</option>
               <option value="kW">kW</option>
               <option value="MW">MW</option>
+              <option value="GW">GW</option>
             </select>
           </div>
 
