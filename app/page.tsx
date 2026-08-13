@@ -40,14 +40,14 @@ export default function HomePage() {
             href="/formules"
             className="rounded-2xl border border-volt-blue/20 bg-volt-blue-dark p-8 transition hover:-translate-y-1 hover:border-volt-blue/60 hover:bg-volt-blue-dark/80"
           >
-            <div className="text-3xl">🧠</div>
+            <div className="text-3xl">📚</div>
 
             <h2 className="mt-5 text-2xl font-semibold text-volt-white">
-              Formules
+              Bibliothèque
             </h2>
 
             <p className="mt-3 text-volt-white/70">
-              Retrouver les principales formules électriques.
+              Retrouver les principales grandeurs et formules électriques.
             </p>
 
             <span className="mt-6 inline-block text-volt-blue">

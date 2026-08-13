@@ -4,18 +4,19 @@ export default function FormulesPage() {
   return (
     <main className="min-h-screen px-6 py-12">
       <div className="mx-auto max-w-5xl">
-         <Link
-                  href="/"
-                  className="inline-flex items-center text-sm text-volt-white/60 transition hover:text-volt-blue"
-                >
-                  ← Retour
-                </Link>
-        <h1 className="text-4xl font-bold text-volt-white">
-          Formules
+        <Link
+          href="/"
+          className="inline-flex items-center text-sm text-volt-white/60 transition hover:text-volt-blue"
+        >
+          ← Retour
+        </Link>
+
+        <h1 className="mt-8 text-4xl font-bold text-volt-white">
+          Bibliothèque
         </h1>
 
         <p className="mt-3 text-volt-white/70">
-          Choisis une catégorie pour commencer.
+          Retrouve les grandeurs, symboles et formules de VOLT & CO.
         </p>
 
         <section className="mt-10 grid gap-5 sm:grid-cols-2">
@@ -28,7 +29,8 @@ export default function FormulesPage() {
             </h2>
 
             <p className="mt-2 text-volt-white/70">
-              Retrouver les principales formules utilisées en électricité.
+              Retrouver les principales grandeurs, symboles et formules
+              utilisées en électricité.
             </p>
           </Link>
         </section>

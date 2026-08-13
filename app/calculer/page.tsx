@@ -84,6 +84,33 @@ export default function CalculerPage() {
               Calculer la chute de tension dans un conducteur.
             </p>
           </Link>
+
+          <Link
+  href="/calculer/courant-electrique"
+  className="rounded-2xl border border-volt-blue/20 bg-volt-blue-dark p-6 transition hover:-translate-y-1 hover:border-volt-blue/60 hover:bg-volt-blue-dark/80"
+>
+  <h2 className="text-xl font-semibold text-volt-white">
+    ⚡ Courant électrique
+  </h2>
+
+  <p className="mt-2 text-volt-white/70">
+    Calculer l&apos;intensité du courant à partir de la charge et du temps.
+  </p>
+</Link>
+
+<Link
+  href="/calculer/resistance-conducteur"
+  className="rounded-2xl border border-volt-blue/20 bg-volt-blue-dark p-6 transition hover:-translate-y-1 hover:border-volt-blue/60 hover:bg-volt-blue-dark/80"
+>
+  <h2 className="text-xl font-semibold text-volt-white">
+    🔧 Résistance d&apos;un conducteur
+  </h2>
+
+  <p className="mt-2 text-volt-white/70">
+    Calculer la résistance d&apos;un conducteur selon sa résistivité,
+    sa longueur et sa section.
+  </p>
+</Link>
         </section>
       </div>
     </main>
