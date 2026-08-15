@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function ConvertirPage() {
+function ConvertirContent() {
   const searchParams = useSearchParams();
   const isChantier = searchParams.get("chantier") === "true";
 
@@ -121,5 +122,13 @@ export default function ConvertirPage() {
         </section>
       </div>
     </main>
+  );
+}
+
+export default function ConvertirPage() {
+  return (
+    <Suspense fallback={null}>
+      <ConvertirContent />
+    </Suspense>
   );
 }

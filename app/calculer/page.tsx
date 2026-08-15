@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 type Mode = "normal" | "electricite" | "pro";
 type Quantity = "U" | "I" | "R";
 
-export default function CalculerPage() {
+function CalculerContent() {
   const searchParams = useSearchParams();
   const isChantier = searchParams.get("chantier") === "true";
 
@@ -22,9 +22,6 @@ export default function CalculerPage() {
     const isOperator = ["+", "-", "×", "÷"].includes(value);
     const isNumberOrDecimal = /^[0-9.]$/.test(value);
 
-    // Après un résultat :
-    // - un chiffre / "." démarre un nouveau calcul
-    // - un opérateur continue avec le résultat
     if (hasCalculated) {
       if (isNumberOrDecimal) {
         setDisplay(value === "." ? "0." : value);
@@ -61,7 +58,6 @@ export default function CalculerPage() {
         return value;
       }
 
-      // Évite deux opérateurs à la suite
       if (
         isOperator &&
         ["+", "-", "×", "÷"].includes(current.slice(-1))
@@ -69,7 +65,6 @@ export default function CalculerPage() {
         return current.slice(0, -1) + value;
       }
 
-      // Évite plusieurs points dans le même nombre
       if (value === ".") {
         const lastNumber = current.split(/[+\-×÷()]/).pop() ?? "";
 
@@ -259,11 +254,11 @@ export default function CalculerPage() {
     <main className="min-h-screen px-5 py-5 sm:px-6 sm:py-6">
       <div className="mx-auto max-w-5xl">
         <Link
-  href={isChantier ? "/outils/chantier" : "/"}
-  className="inline-flex items-center text-sm text-volt-white/60 transition hover:text-volt-blue"
->
-  ← {isChantier ? "Chantier" : "Retour"}
-</Link>
+          href={isChantier ? "/outils/chantier" : "/"}
+          className="inline-flex items-center text-sm text-volt-white/60 transition hover:text-volt-blue"
+        >
+          ← {isChantier ? "Chantier" : "Retour"}
+        </Link>
 
         <div className="mt-4">
           <h1 className="text-3xl font-bold text-volt-white sm:text-4xl">
@@ -627,5 +622,13 @@ export default function CalculerPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function CalculerPage() {
+  return (
+    <Suspense fallback={null}>
+      <CalculerContent />
+    </Suspense>
   );
 }
