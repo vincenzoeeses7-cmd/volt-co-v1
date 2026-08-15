@@ -1,15 +1,20 @@
+"use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 export default function ConvertirPage() {
+  const searchParams = useSearchParams();
+  const isChantier = searchParams.get("chantier") === "true";
+
   return (
     <main className="min-h-screen px-6 py-12">
       <div className="mx-auto max-w-5xl">
         <Link
-          href="/"
+          href={isChantier ? "/outils/chantier" : "/"}
           className="inline-flex items-center text-sm text-volt-white/60 transition hover:text-volt-blue"
         >
-          ← Retour
+          ← {isChantier ? "Chantier" : "Retour"}
         </Link>
 
         <div className="mt-8">
@@ -18,12 +23,11 @@ export default function ConvertirPage() {
           </h1>
 
           <p className="mt-3 text-volt-white/70">
-            Des conversions simples et utiles pour l'électricité.
+            Des conversions simples et utiles pour l&apos;électricité.
           </p>
         </div>
 
         <section className="mt-10 grid gap-5 sm:grid-cols-2">
-          {/* Longueur */}
           <Link
             href="/convertir/longueur"
             className="rounded-2xl border border-volt-blue/20 bg-volt-blue-dark p-6 transition hover:-translate-y-1 hover:border-volt-blue/60 hover:bg-volt-blue-dark/80"
@@ -37,7 +41,6 @@ export default function ConvertirPage() {
             </p>
           </Link>
 
-          {/* Surface */}
           <Link
             href="/convertir/surface"
             className="rounded-2xl border border-volt-blue/20 bg-volt-blue-dark p-6 transition hover:-translate-y-1 hover:border-volt-blue/60 hover:bg-volt-blue-dark/80"
@@ -51,7 +54,6 @@ export default function ConvertirPage() {
             </p>
           </Link>
 
-          {/* Tension */}
           <Link
             href="/convertir/tension"
             className="rounded-2xl border border-volt-blue/20 bg-volt-blue-dark p-6 transition hover:-translate-y-1 hover:border-volt-blue/60 hover:bg-volt-blue-dark/80"
@@ -65,7 +67,6 @@ export default function ConvertirPage() {
             </p>
           </Link>
 
-          {/* Intensité */}
           <Link
             href="/convertir/intensite"
             className="rounded-2xl border border-volt-blue/20 bg-volt-blue-dark p-6 transition hover:-translate-y-1 hover:border-volt-blue/60 hover:bg-volt-blue-dark/80"
@@ -79,7 +80,6 @@ export default function ConvertirPage() {
             </p>
           </Link>
 
-          {/* Résistance */}
           <Link
             href="/convertir/resistance"
             className="rounded-2xl border border-volt-blue/20 bg-volt-blue-dark p-6 transition hover:-translate-y-1 hover:border-volt-blue/60 hover:bg-volt-blue-dark/80"
@@ -93,7 +93,6 @@ export default function ConvertirPage() {
             </p>
           </Link>
 
-          {/* Puissance */}
           <Link
             href="/convertir/puissance"
             className="rounded-2xl border border-volt-blue/20 bg-volt-blue-dark p-6 transition hover:-translate-y-1 hover:border-volt-blue/60 hover:bg-volt-blue-dark/80"
@@ -107,7 +106,6 @@ export default function ConvertirPage() {
             </p>
           </Link>
 
-          {/* Énergie */}
           <Link
             href="/convertir/energie"
             className="rounded-2xl border border-volt-blue/20 bg-volt-blue-dark p-6 transition hover:-translate-y-1 hover:border-volt-blue/60 hover:bg-volt-blue-dark/80"

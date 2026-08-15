@@ -2,11 +2,15 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 type Mode = "normal" | "electricite" | "pro";
 type Quantity = "U" | "I" | "R";
 
 export default function CalculerPage() {
+  const searchParams = useSearchParams();
+  const isChantier = searchParams.get("chantier") === "true";
+
   const [mode, setMode] = useState<Mode>("normal");
 
   // CALCULATRICE NORMALE
@@ -255,11 +259,11 @@ export default function CalculerPage() {
     <main className="min-h-screen px-5 py-5 sm:px-6 sm:py-6">
       <div className="mx-auto max-w-5xl">
         <Link
-          href="/outils"
-          className="inline-flex items-center text-sm text-volt-white/60 transition hover:text-volt-blue"
-        >
-          ← Retour
-        </Link>
+  href={isChantier ? "/outils/chantier" : "/"}
+  className="inline-flex items-center text-sm text-volt-white/60 transition hover:text-volt-blue"
+>
+  ← {isChantier ? "Chantier" : "Retour"}
+</Link>
 
         <div className="mt-4">
           <h1 className="text-3xl font-bold text-volt-white sm:text-4xl">
